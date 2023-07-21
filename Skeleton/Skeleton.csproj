@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Skeleton.Entities\Skeleton.Entities.csproj" />
     <ProjectReference Include="..\Skeleton.Logger\Skeleton.Logger.csproj" />
   </ItemGroup>
 
