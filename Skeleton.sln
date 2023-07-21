@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton", "Skeleton\Skelet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton.Abstraction", "Skeleton.Abstraction\Skeleton.Abstraction.csproj", "{9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton.Logger", "Skeleton.Logger\Skeleton.Logger.csproj", "{50076560-4150-4F3E-876B-AB6A1BF4096D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50076560-4150-4F3E-876B-AB6A1BF4096D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50076560-4150-4F3E-876B-AB6A1BF4096D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50076560-4150-4F3E-876B-AB6A1BF4096D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50076560-4150-4F3E-876B-AB6A1BF4096D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
