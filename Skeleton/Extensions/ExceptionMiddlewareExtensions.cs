@@ -2,6 +2,7 @@
 using Skeleton.Abstraction;
 using Skeleton.Entities.ErrorModels;
 using System.Net;
+using Skeleton.Entities.Exceptions;
 
 namespace Skeleton.Extensions;
 
@@ -23,6 +24,12 @@ public static class ExceptionMiddlewareExtensions
                 var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                 if (contextFeature != null)
                 {
+                    context.Response.StatusCode = contextFeature.Error switch
+                    {
+                        NotFoundException => StatusCodes.Status404NotFound,
+                        _ => StatusCodes.Status500InternalServerError
+                    };
+                    
                     logger.LogError($"Something went wrong: {contextFeature.Error}");
                     await context.Response.WriteAsync(new ApiErrorDetails()
                     {
