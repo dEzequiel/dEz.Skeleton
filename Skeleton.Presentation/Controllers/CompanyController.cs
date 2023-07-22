@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
+using Skeleton.Shared.DTOs;
 
 namespace Skeleton.Presentation.Controllers;
 
@@ -16,15 +17,16 @@ public class CompanyController : ControllerBase
     [HttpGet, ProducesResponseType(typeof(IEnumerable<Company>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetCompanies()
     {
-        try
-        {
-            var companies = await _service.CompanyService.GetAllAsync();
-
-            return Ok(companies);
-        }
-        catch
-        {
-            return StatusCode(500, "Internal server error");
-        }
+        var companies = await _service.CompanyService.GetAllAsync();
+        return Ok(companies);
+    }
+    
+    [HttpGet("id:guid")] 
+    [ProducesResponseType(typeof(CompanyForGet), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCompany(Guid id)
+    {
+        var company = await _service.CompanyService.GetByIdAsync(id);
+        return Ok(company);
     }
 }

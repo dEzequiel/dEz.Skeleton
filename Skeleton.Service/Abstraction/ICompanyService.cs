@@ -6,9 +6,15 @@ namespace Skeleton.Service.Abstraction;
 public interface ICompanyService
 {
     /// <summary>
-    /// 
+    /// Get all Companies.
     /// </summary>
-    /// <param name="trackChanges"></param>
     /// <returns></returns>
     Task<IEnumerable<CompanyForGet>> GetAllAsync();
+
+    /// <summary>
+    /// Get Company by id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<CompanyForGet> GetByIdAsync(Guid id);
 }

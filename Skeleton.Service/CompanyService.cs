@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Skeleton.Abstraction;
+using Skeleton.Entities.Exceptions;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
@@ -35,6 +36,23 @@ public sealed class CompanyService : ICompanyService
         var result = _mapper.Map<IEnumerable<CompanyForGet>>(companies);
 
         _logger.LogInfo($"CompanyService --> GetAllAsync --> End");
+
+        return result;
+    }
+
+    ///<inheritdoc cref="ICompanyService"/>
+    public async Task<CompanyForGet> GetByIdAsync(Guid id)
+    {
+        _logger.LogInfo($"CompanyService --> GetByIdAsync({id}) --> Start");
+
+        var company = await _unitOfWork.CompanyRepository.GetAsync(id);
+
+        if (company is null)
+            throw new CompanyNotFoundException(id);
+
+        var result = _mapper.Map<CompanyForGet>(company);
+
+        _logger.LogInfo($"CompanyService --> GetByIdAsync({id}) --> End");
 
         return result;
     }
