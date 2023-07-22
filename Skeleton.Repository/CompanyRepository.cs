@@ -1,9 +1,10 @@
-﻿using Skeleton.Abstraction.Repository;
+﻿using Microsoft.EntityFrameworkCore;
+using Skeleton.Abstraction.Repository;
 using Skeleton.Entities.Models;
 
 namespace Skeleton.Repository;
 
-public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
+public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
 {
     /// <summary>
     /// Constructor.
@@ -13,4 +14,8 @@ public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
         : base(repositoryContext)
     {
     }
+
+    ///<inheritdoc cref="ICompanyRepository"/>
+    public async Task<IEnumerable<Company>> GetAllAsync() =>
+        await FindAll(false).ToListAsync();
 }
