@@ -1,5 +1,5 @@
 ﻿using Skeleton.Abstraction;
-using Skeleton.Abstraction.Service;
+using Skeleton.Service.Abstraction;
 
 namespace Skeleton.Service;
 

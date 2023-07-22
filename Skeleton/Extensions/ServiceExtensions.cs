@@ -3,6 +3,7 @@ using Skeleton.Abstraction;
 using Skeleton.Logger;
 using Skeleton.Repository;
 using Skeleton.Service;
+using Skeleton.Service.Abstraction;
 
 namespace Skeleton.Extensions
 {

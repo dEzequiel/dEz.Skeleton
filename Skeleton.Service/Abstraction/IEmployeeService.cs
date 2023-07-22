@@ -1,4 +1,4 @@
-﻿namespace Skeleton.Abstraction.Service;
+﻿namespace Skeleton.Service.Abstraction;
 
 public interface IEmployeeService
 {

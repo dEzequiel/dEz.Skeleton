@@ -1,6 +1,5 @@
-﻿using Skeleton.Abstraction.Service;
-
-namespace Skeleton.Abstraction;
+﻿
+namespace Skeleton.Service.Abstraction;
 
 public interface IServiceManager
 {
