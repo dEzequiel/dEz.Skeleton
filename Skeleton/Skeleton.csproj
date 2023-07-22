@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Skeleton.Logger\Skeleton.Logger.csproj" />
     <ProjectReference Include="..\Skeleton.Repository\Skeleton.Repository.csproj" />
     <ProjectReference Include="..\Skeleton.Service\Skeleton.Service.csproj" />
+    <ProjectReference Include="..\Skeleton.Presentation\Skeleton.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
