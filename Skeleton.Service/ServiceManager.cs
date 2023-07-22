@@ -1,4 +1,5 @@
-﻿using Skeleton.Abstraction;
+﻿using AutoMapper;
+using Skeleton.Abstraction;
 using Skeleton.Service.Abstraction;
 
 namespace Skeleton.Service;
@@ -13,10 +14,10 @@ public sealed class ServiceManager : IServiceManager
     /// </summary>
     /// <param name="unitOfWork"></param>
     /// <param name="logger"></param>
-    public ServiceManager(IUnitOfWork unitOfWork, ILoggerManager logger)
+    public ServiceManager(IUnitOfWork unitOfWork, ILoggerManager logger, IMapper mapper)
     {
-        _companyService = new Lazy<ICompanyService>(() => new CompanyService(unitOfWork, logger));
-        _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(unitOfWork, logger));
+        _companyService = new Lazy<ICompanyService>(() => new CompanyService(unitOfWork, logger, mapper));
+        _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(unitOfWork, logger, mapper));
     }
 
     public ICompanyService CompanyService => _companyService.Value;

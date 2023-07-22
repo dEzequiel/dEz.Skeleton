@@ -1,4 +1,5 @@
-﻿using Skeleton.Abstraction;
+﻿using AutoMapper;
+using Skeleton.Abstraction;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
 
@@ -8,16 +9,19 @@ public sealed class CompanyService : ICompanyService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILoggerManager _logger;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="unitOfWork"></param>
     /// <param name="logger"></param>
-    public CompanyService(IUnitOfWork unitOfWork, ILoggerManager logger)
+    /// <param name="mapper"></param>
+    public CompanyService(IUnitOfWork unitOfWork, ILoggerManager logger, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _mapper = mapper;
     }
 
     ///<inheritdoc cref="ICompanyService"/>

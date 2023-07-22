@@ -10,4 +10,8 @@
         <ProjectReference Include="..\Skeleton.Abstraction\Skeleton.Abstraction.csproj" />
         <ProjectReference Include="..\Skeleton.Entities\Skeleton.Entities.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    </ItemGroup>
 </Project>
