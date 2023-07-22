@@ -1,6 +1,7 @@
 ﻿using Skeleton.Abstraction;
 using Skeleton.Logger;
 using Skeleton.Repository;
+using Skeleton.Service;
 
 namespace Skeleton.Extensions
 {
@@ -19,5 +20,12 @@ namespace Skeleton.Extensions
         /// <param name="serviceCollection"></param>
         public static void ConfigureUnitOfWork(this IServiceCollection serviceCollection) =>
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        /// <summary>
+        /// DI for service manager.
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        public static void ConfigureServiceManager(this IServiceCollection serviceCollection) =>
+            serviceCollection.AddScoped<IServiceManager, ServiceManager>();
     }
 }

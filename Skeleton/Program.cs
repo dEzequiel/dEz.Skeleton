@@ -12,6 +12,7 @@ LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),
 // Add services to the container.
 builder.Services.ConfigureLoggerManager();
 builder.Services.ConfigureUnitOfWork();
+builder.Services.ConfigureServiceManager();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
