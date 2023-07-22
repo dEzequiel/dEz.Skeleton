@@ -33,5 +33,5 @@ public class Employee
     /// <summary>
     /// Company attached to Employee.
     /// </summary>
-    public Company? Company { get; set; }
+    public Company Company { get; set; } = null!;
 }
