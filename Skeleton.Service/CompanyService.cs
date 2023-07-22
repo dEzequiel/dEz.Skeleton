@@ -2,6 +2,7 @@
 using Skeleton.Abstraction;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
+using Skeleton.Shared.DTOs;
 
 namespace Skeleton.Service;
 
@@ -25,14 +26,16 @@ public sealed class CompanyService : ICompanyService
     }
 
     ///<inheritdoc cref="ICompanyService"/>
-    public async Task<IEnumerable<Company>> GetAllAsync()
+    public async Task<IEnumerable<CompanyForGet>> GetAllAsync()
     {
         _logger.LogInfo($"CompanyService --> GetAllAsync --> Start");
 
         var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
 
+        var result = _mapper.Map<IEnumerable<CompanyForGet>>(companies);
+
         _logger.LogInfo($"CompanyService --> GetAllAsync --> End");
 
-        return companies;
+        return result;
     }
 }

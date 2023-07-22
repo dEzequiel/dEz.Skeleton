@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Skeleton.Abstraction\Skeleton.Abstraction.csproj" />
-        <ProjectReference Include="..\Skeleton.Entities\Skeleton.Entities.csproj" />
+        <ProjectReference Include="..\Skeleton.Shared\Skeleton.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>

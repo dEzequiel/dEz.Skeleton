@@ -14,11 +14,11 @@ public class CompanyController : ControllerBase
     public CompanyController(IServiceManager service) => _service = service;
 
     [HttpGet, ProducesResponseType(typeof(IEnumerable<Company>), StatusCodes.Status200OK)]
-    public IActionResult GetCompanies()
+    public async Task<IActionResult> GetCompanies()
     {
         try
         {
-            var companies = _service.CompanyService.GetAllAsync();
+            var companies = await _service.CompanyService.GetAllAsync();
 
             return Ok(companies);
         }

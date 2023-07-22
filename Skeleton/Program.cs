@@ -14,6 +14,7 @@ builder.Services.ConfigureLoggerManager();
 builder.Services.ConfigureUnitOfWork();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureDbContext(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(Skeleton.Presentation.AssemblyReference).Assembly);
