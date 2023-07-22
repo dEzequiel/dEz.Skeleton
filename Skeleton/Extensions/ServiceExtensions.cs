@@ -1,4 +1,5 @@
-﻿using Skeleton.Abstraction;
+﻿using Microsoft.EntityFrameworkCore;
+using Skeleton.Abstraction;
 using Skeleton.Logger;
 using Skeleton.Repository;
 using Skeleton.Service;
@@ -27,5 +28,11 @@ namespace Skeleton.Extensions
         /// <param name="serviceCollection"></param>
         public static void ConfigureServiceManager(this IServiceCollection serviceCollection) =>
             serviceCollection.AddScoped<IServiceManager, ServiceManager>();
+
+
+        public static void ConfigureDbContext(this IServiceCollection serviceCollection,
+            IConfiguration configuration) =>
+            serviceCollection.AddDbContext<RepositoryContext>(opts =>
+                opts.UseSqlServer(configuration.GetConnectionString("sqlConnectionString")));
     }
 }
