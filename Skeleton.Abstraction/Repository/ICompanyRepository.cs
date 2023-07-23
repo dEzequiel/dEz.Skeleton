@@ -2,18 +2,26 @@
 
 namespace Skeleton.Abstraction.Repository;
 
+/// <summary>
+/// Repository interface for company-related operations.
+/// </summary>
 public interface ICompanyRepository
 {
     /// <summary>
-    /// Get all Companies.
+    /// Asynchronously retrieves all companies.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
+    /// <see cref="Company"/>.</returns>
     Task<IEnumerable<Company>> GetAllAsync();
 
     /// <summary>
-    /// Get Company by Id.
+    /// Asynchronously retrieves a company by its ID.
     /// </summary>
-    /// <param name="id">Company identifier.</param>
-    /// <returns></returns>
+    /// <param name="id">The unique identifier of the company to retrieve.</param>
+    /// <returns>
+    /// A task representing the asynchronous operation, returning the <see cref="Company"/> object
+    /// with the specified ID, or null if the company is not found.
+    /// </returns>
     Task<Company?> GetAsync(Guid id);
+
 }

@@ -3,18 +3,24 @@ using Skeleton.Shared.DTOs;
 
 namespace Skeleton.Service.Abstraction;
 
+/// <summary>
+/// Service interface for company-related operations.
+/// </summary>
 public interface ICompanyService
 {
     /// <summary>
-    /// Get all Companies.
+    /// Gets all companies asynchronously.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
+    /// <see cref="CompanyForGet"/>.</returns>
     Task<IEnumerable<CompanyForGet>> GetAllAsync();
 
     /// <summary>
-    /// Get Company by id.
+    /// Gets a company by its ID asynchronously.
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">The unique identifier of the company.</param>
+    /// <returns>A task representing the asynchronous operation, returning the <see cref="CompanyForGet"/>
+    /// object or null if not found.</returns>
     Task<CompanyForGet> GetByIdAsync(Guid id);
 }
+
