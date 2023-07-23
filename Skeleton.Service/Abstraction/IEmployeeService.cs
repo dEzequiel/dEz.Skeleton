@@ -1,6 +1,25 @@
-﻿namespace Skeleton.Service.Abstraction;
+﻿using Skeleton.Shared.DTOs;
 
+namespace Skeleton.Service.Abstraction;
+
+/// <summary>
+/// Service interface for employee-related operations.
+/// </summary>
 public interface IEmployeeService
 {
-    
+    /// <summary>
+    /// Get all employees by company ID asynchronously.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
+    /// <see cref="EmployeeForGet"/>.</returns>
+    Task<IEnumerable<EmployeeForGet>> GetAllAsync(Guid companyId);
+
+    /// <summary>
+    /// Gets employee by its ID asynchronously.
+    /// </summary>
+    /// <param name="id">The unique identifier of the employee.</param>
+    /// <param name="companyId">The unique identifier of the company.</param>
+    /// <returns>A task representing the asynchronous operation, returning the <see cref="EmployeeForGet"/>
+    /// object or null if not found.</returns>
+    Task<EmployeeForGet> GetByIdAsync(Guid id, Guid companyId);
 }
