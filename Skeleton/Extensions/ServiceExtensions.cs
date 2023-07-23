@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skeleton.Abstraction;
@@ -28,8 +29,8 @@ namespace Skeleton.Extensions
         {
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            serviceCollection.AddLazyScoped<ICompanyRepository>();
-            serviceCollection.AddLazyScoped<IEmployeeRepository>();
+            serviceCollection.AddScoped<ICompanyRepository, CompanyRepository>();
+            serviceCollection.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
         
         private static void AddLazyScoped<T>(this IServiceCollection services) where T : class =>

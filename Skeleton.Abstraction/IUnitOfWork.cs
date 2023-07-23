@@ -2,7 +2,7 @@
 
 namespace Skeleton.Abstraction;
 
-public interface IUnitOfWork
+public interface IUnitOfWork : IDisposable
 {
     ICompanyRepository CompanyRepository { get; }
     IEmployeeRepository EmployeeRepository { get; }
