@@ -73,4 +73,10 @@ public sealed class CompanyService : ICompanyService
 
         return companyToReturn;
     }
+
+    ///<inheritdoc cref="IDisposable"/>
+    public void Dispose()
+    {
+        _unitOfWork.Dispose();
+    }
 }

@@ -6,20 +6,20 @@ namespace Skeleton.Service;
 
 public sealed class ServiceManager : IServiceManager
 {
-    private readonly Lazy<ICompanyService> _companyService;
-    private readonly Lazy<IEmployeeService> _employeeService;
+    private readonly ICompanyService _companyService;
+    private readonly IEmployeeService _employeeService;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="unitOfWork"></param>
-    /// <param name="logger"></param>
-    public ServiceManager(IUnitOfWork unitOfWork, ILoggerManager logger, IMapper mapper)
+    /// <param name="companyService"></param>
+    /// <param name="employeeService"></param>
+    public ServiceManager(ICompanyService companyService, IEmployeeService employeeService)
     {
-        _companyService = new Lazy<ICompanyService>(() => new CompanyService(unitOfWork, logger, mapper));
-        _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(unitOfWork, logger, mapper, _companyService.Value));
+        _companyService = companyService;
+        _employeeService = employeeService;
     }
 
-    public ICompanyService CompanyService => _companyService.Value;
-    public IEmployeeService EmployeeService => _employeeService.Value;
+    public ICompanyService CompanyService => _companyService;
+    public IEmployeeService EmployeeService => _employeeService;
 }

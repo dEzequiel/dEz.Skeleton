@@ -63,5 +63,12 @@ public sealed class EmployeeService : IEmployeeService
         
         _logger.LogInfo($"EmployeeService --> GetByIdAsync(CompanyId({companyId} - EmployeeId({id}))) --> End");
 
-        return result;    }
+        return result;    
+    }
+    
+    ///<inheritdoc cref="IDisposable"/>
+    public void Dispose()
+    {
+        _unitOfWork.Dispose();
+    }
 }

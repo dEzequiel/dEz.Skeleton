@@ -5,7 +5,7 @@ namespace Skeleton.Service.Abstraction;
 /// <summary>
 /// Service interface for employee-related operations.
 /// </summary>
-public interface IEmployeeService
+public interface IEmployeeService : IServiceBase
 {
     /// <summary>
     /// Get all employees by company ID asynchronously.

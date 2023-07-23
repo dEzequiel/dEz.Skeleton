@@ -6,7 +6,7 @@ namespace Skeleton.Service.Abstraction;
 /// <summary>
 /// Service interface for company-related operations.
 /// </summary>
-public interface ICompanyService
+public interface ICompanyService : IServiceBase
 {
     /// <summary>
     /// Gets all companies asynchronously.
