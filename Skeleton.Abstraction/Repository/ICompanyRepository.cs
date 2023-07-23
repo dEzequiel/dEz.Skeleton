@@ -24,4 +24,11 @@ public interface ICompanyRepository
     /// </returns>
     Task<Company?> GetAsync(Guid id);
 
+    /// <summary>
+    /// Creates company.
+    /// </summary>
+    /// <param name="company">The company object to be created.</param>
+    /// <returns></returns>
+    void AddAsync(Company company);
+
 }

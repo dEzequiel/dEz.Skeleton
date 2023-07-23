@@ -29,4 +29,15 @@ public class CompanyController : ControllerBase
         var company = await _service.CompanyService.GetByIdAsync(id);
         return Ok(company);
     }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> AddAsync([FromBody] CompanyForAdd company)
+    {
+        var location = Url.Action(nameof(AddAsync), default) ?? $"/";
+
+        var createdCompany = await _service.CompanyService.AddAsync(company);
+        
+        return Created(location, createdCompany);
+    }
 }

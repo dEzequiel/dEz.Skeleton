@@ -22,5 +22,13 @@ public interface ICompanyService
     /// <returns>A task representing the asynchronous operation, returning the <see cref="CompanyForGet"/>
     /// object or null if not found.</returns>
     Task<CompanyForGet> GetByIdAsync(Guid id);
+
+    /// <summary>
+    /// Add new company asynchronously.
+    /// </summary>
+    /// <param name="companyForAdd"></param>
+    /// <returns>A task representing the asynchronous operation, returning the <see cref="CompanyForGet"/>
+    /// object.</returns>
+    Task<CompanyForGet> AddAsync(CompanyForAdd companyForAdd);
 }
 

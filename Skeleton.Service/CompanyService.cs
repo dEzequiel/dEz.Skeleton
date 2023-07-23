@@ -56,4 +56,21 @@ public sealed class CompanyService : ICompanyService
 
         return result;
     }
+    
+    ///<inheritdoc cref="ICompanyService"/>
+    public async Task<CompanyForGet> AddAsync(CompanyForAdd company)
+    {
+        _logger.LogInfo($"CompanyService --> AddAsync --> Start");
+
+        var companyEntity = _mapper.Map<Company>(company);
+        
+        _unitOfWork.CompanyRepository.AddAsync(companyEntity);
+        await _unitOfWork.SaveAsync();
+
+        var companyToReturn = _mapper.Map<CompanyForGet>(companyEntity);
+        
+        _logger.LogInfo($"CompanyService --> AddAsync --> End");
+
+        return companyToReturn;
+    }
 }

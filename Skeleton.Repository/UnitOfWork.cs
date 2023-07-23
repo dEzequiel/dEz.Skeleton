@@ -28,5 +28,5 @@ public class UnitOfWork : IUnitOfWork
     public IEmployeeRepository EmployeeRepository => _employeeRepository.Value;
 
     ///<inheritdoc cref="IUnitOfWork"/>
-    public async void Save() => await _repositoryContext.SaveChangesAsync();
+    public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
 }
