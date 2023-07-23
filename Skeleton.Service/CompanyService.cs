@@ -64,7 +64,7 @@ public sealed class CompanyService : ICompanyService
 
         var companyEntity = _mapper.Map<Company>(company);
         
-        _unitOfWork.CompanyRepository.AddAsync(companyEntity);
+        _unitOfWork.CompanyRepository.Add(companyEntity);
         await _unitOfWork.SaveAsync();
 
         var companyToReturn = _mapper.Map<CompanyForGet>(companyEntity);

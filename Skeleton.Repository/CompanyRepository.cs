@@ -25,6 +25,6 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
             .SingleOrDefaultAsync();
 
     ///<inheritdoc cref="ICompanyRepository"/>
-    public void AddAsync(Company company) =>
+    public void Add(Company company) =>
         Create(company);
 }
