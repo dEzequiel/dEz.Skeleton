@@ -4,6 +4,9 @@ using Skeleton.Shared.DTOs;
 
 namespace Skeleton.Mapper;
 
+/// <summary>
+/// AutoMapper profile for company-related mappings.
+/// </summary>
 public class CompanyProfile : Profile
 {
     public CompanyProfile()
