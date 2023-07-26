@@ -14,4 +14,4 @@ public record CompanyForGet(Guid Id, string Name, string FullAddress);
 /// <param name="Name"></param>
 /// <param name="Address"></param>
 /// <param name="Country"></param>
-public record CompanyForAdd(string Name, string Address, string Country);
+public record CompanyForAdd(string Name, string Address, string Country, IEnumerable<EmployeeForAdd>? Employees);
