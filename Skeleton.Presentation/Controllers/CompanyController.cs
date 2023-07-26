@@ -21,7 +21,7 @@ public class CompanyController : ControllerBase
         return Ok(companies);
     }
     
-    [HttpGet("id:guid")] 
+    [HttpGet("{id:guid}", Name = "GetCompany")] 
     [ProducesResponseType(typeof(CompanyForGet), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCompany(Guid id)
@@ -34,10 +34,11 @@ public class CompanyController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> AddAsync([FromBody] CompanyForAdd company)
     {
-        var location = Url.Action(nameof(AddAsync), default) ?? $"/";
-
         var createdCompany = await _service.CompanyService.AddAsync(company);
         
-        return Created(location, createdCompany);
+        return CreatedAtRoute("GetCompany", new
+        {
+            id = createdCompany.Id
+        }, createdCompany);
     }
 }
