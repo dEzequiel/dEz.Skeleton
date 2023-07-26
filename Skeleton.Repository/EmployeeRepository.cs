@@ -7,7 +7,7 @@ namespace Skeleton.Repository;
 /// <summary>
 /// Repository implementation for employee-related operations.
 /// </summary>
-public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
+public sealed class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
 {
     /// <summary>
     /// Constructor.
@@ -26,4 +26,11 @@ public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
     public async Task<Employee?> GetAsync(Guid id, Guid companyId) =>
         await FindByCondition(e => (e.Id.Equals(id) && e.CompanyId.Equals(companyId)), false)
             .SingleOrDefaultAsync();
+
+    ///<inheritdoc cref="IEmployeeRepository"/>
+    public void Add(Guid companyId, Employee employee)
+    {
+        employee.CompanyId = companyId;
+        Create(employee);   
+    }
 }

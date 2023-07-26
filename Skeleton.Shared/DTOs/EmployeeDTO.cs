@@ -8,7 +8,7 @@
 /// <param name="Age"></param>
 /// <param name="Position"></param>
 /// <param name="CompanyId"></param>
-public record EmployeeForGet(Guid Id, string? Name, int Age, string? Position, Guid CompanyId);
+public record EmployeeForGet(Guid Id, string Name, int Age, string? Position, Guid CompanyId);
     
 /// <summary>
 /// DTO for inserting employee
@@ -17,4 +17,4 @@ public record EmployeeForGet(Guid Id, string? Name, int Age, string? Position, G
 /// <param name="Age"></param>
 /// <param name="Position"></param>
 /// <param name="CompanyId"></param>
-public record EmployeeForAdd(string? Name, int Age, string? Position, Guid CompanyId);
+public record EmployeeForAdd(string Name, int Age, string? Position);

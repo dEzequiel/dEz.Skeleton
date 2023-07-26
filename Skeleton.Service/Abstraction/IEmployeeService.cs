@@ -22,4 +22,13 @@ public interface IEmployeeService : IServiceBase
     /// <returns>A task representing the asynchronous operation, returning the <see cref="EmployeeForGet"/>
     /// object or null if not found.</returns>
     Task<EmployeeForGet> GetByIdAsync(Guid id, Guid companyId);
+
+    /// <summary>
+    /// Add new employee asynchronously.
+    /// </summary>
+    /// <param name="employeeForAdd"></param>
+    /// <param name="companyId"></param>
+    /// <returns>A task representing the asynchronous operation, returning the <see cref="EmployeeForGet"/>
+    /// object.</returns>
+    Task<EmployeeForGet> AddAsync(Guid companyId, EmployeeForAdd employeeForAdd);
 }

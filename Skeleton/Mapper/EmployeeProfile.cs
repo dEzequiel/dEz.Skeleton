@@ -12,5 +12,6 @@ public class EmployeeProfile : Profile
     public EmployeeProfile()
     {
         CreateMap<Employee, EmployeeForGet>();
+        CreateMap<EmployeeForAdd, Employee>();
     }
 }

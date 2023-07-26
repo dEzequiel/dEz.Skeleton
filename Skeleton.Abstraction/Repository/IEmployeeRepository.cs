@@ -25,4 +25,11 @@ public interface IEmployeeRepository
     /// with the specified ID, or null if the company is not found.
     /// </returns>
     Task<Employee?> GetAsync(Guid id, Guid companyId);
+    
+    /// <summary>
+    /// Create employee
+    /// </summary>
+    /// <param name="companyId">Company attached to employee.</param>
+    /// <param name="employee">Employee object to be created.</param>
+    void Add(Guid companyId, Employee employee);
 }

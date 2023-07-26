@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Skeleton.Abstraction;
 using Skeleton.Entities.Exceptions;
+using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
 
@@ -14,7 +15,6 @@ public sealed class EmployeeService : IEmployeeService
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILoggerManager _logger;
     private readonly IMapper _mapper;
-    private readonly ICompanyService _companyService;
 
     /// <summary>
     /// Constructor.
@@ -22,13 +22,11 @@ public sealed class EmployeeService : IEmployeeService
     /// <param name="unitOfWork"></param>
     /// <param name="logger"></param>
     /// <param name="mapper"></param>
-    /// <param name="companyService"></param>
-    public EmployeeService(IUnitOfWork unitOfWork, ILoggerManager logger, IMapper mapper, ICompanyService companyService)
+    public EmployeeService(IUnitOfWork unitOfWork, ILoggerManager logger, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _logger = logger;
         _mapper = mapper;
-        _companyService = companyService;
     }
 
     ///<inheritdoc cref="IEmployeeService"/>
@@ -36,7 +34,10 @@ public sealed class EmployeeService : IEmployeeService
     {
         _logger.LogInfo($"EmployeeService --> GetAllAsync --> Start");
 
-        var company = await _companyService.GetByIdAsync(companyId);
+        var company = await _unitOfWork.CompanyRepository.GetAsync(companyId);
+
+        if (company is null)
+            throw new CompanyNotFoundException(companyId);
         
         var employees = await _unitOfWork.EmployeeRepository.GetAllAsync(companyId);
 
@@ -52,7 +53,10 @@ public sealed class EmployeeService : IEmployeeService
     {
         _logger.LogInfo($"EmployeeService --> GetByIdAsync(CompanyId({companyId} - EmployeeId({id}))) --> Start");
 
-        var company = await _companyService.GetByIdAsync(companyId);
+        var company = await _unitOfWork.CompanyRepository.GetAsync(companyId);
+        
+        if (company is null)
+            throw new CompanyNotFoundException(companyId);
 
         var employee = await _unitOfWork.EmployeeRepository.GetAsync(id, companyId);
 
@@ -65,7 +69,29 @@ public sealed class EmployeeService : IEmployeeService
 
         return result;    
     }
-    
+
+    ///<inheritdoc cref="IEmployeeService"/>
+    public async Task<EmployeeForGet> AddAsync(Guid companyId, EmployeeForAdd employeeForAdd)
+    {
+        _logger.LogInfo($"EmployeeService --> AddAsync --> Start");
+
+        var company = await _unitOfWork.CompanyRepository.GetAsync(companyId);
+        
+        if (company is null)
+            throw new CompanyNotFoundException(companyId);
+        
+        var employeeEntity = _mapper.Map<Employee>(employeeForAdd);
+        
+        _unitOfWork.EmployeeRepository.Add(companyId, employeeEntity);
+        await _unitOfWork.SaveAsync();
+
+        var employeeToReturn = _mapper.Map<EmployeeForGet>(employeeEntity);
+        
+        _logger.LogInfo($"EmployeeService --> AddAsync --> End");
+
+        return employeeToReturn;
+    }
+
     ///<inheritdoc cref="IDisposable"/>
     public void Dispose()
     {
