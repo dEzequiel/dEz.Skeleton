@@ -13,6 +13,13 @@ public interface ICompanyRepository
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="Company"/>.</returns>
     Task<IEnumerable<Company>> GetAllAsync();
+    
+    /// <summary>
+    /// Asynchronously retrieves all companies by its ID.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
+    /// <see cref="Company"/>.</returns>
+    Task<IEnumerable<Company>> GetAllByIdAsync(IEnumerable<Guid> ids);
 
     /// <summary>
     /// Asynchronously retrieves a company by its ID.

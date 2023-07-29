@@ -41,6 +41,26 @@ public sealed class CompanyService : ICompanyService
     }
 
     ///<inheritdoc cref="ICompanyService"/>
+    public async Task<IEnumerable<CompanyForGet>> GetAllByIdAsync(IEnumerable<Guid> ids)
+    {
+        _logger.LogInfo($"CompanyService --> GetAllByIdAsync --> Start");
+        
+        if (!ids.Any())
+            throw new IdParametersBadRequestException();
+
+        var companies = await _unitOfWork.CompanyRepository.GetAllByIdAsync(ids);
+
+        if (companies.Count() != ids.Count())
+            throw new CollectionByIdsBadRequestException();
+        
+        var result = _mapper.Map<IEnumerable<CompanyForGet>>(companies);
+
+        _logger.LogInfo($"CompanyService --> GetAllByIdAsync --> End");
+
+        return result;    
+    }
+
+    ///<inheritdoc cref="ICompanyService"/>
     public async Task<CompanyForGet> GetByIdAsync(Guid id)
     {
         _logger.LogInfo($"CompanyService --> GetByIdAsync({id}) --> Start");

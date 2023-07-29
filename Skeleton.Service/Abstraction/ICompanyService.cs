@@ -14,6 +14,13 @@ public interface ICompanyService : IServiceBase
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="CompanyForGet"/>.</returns>
     Task<IEnumerable<CompanyForGet>> GetAllAsync();
+    
+    /// <summary>
+    /// Gets all companies asynchronously by its ID.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
+    /// <see cref="CompanyForGet"/>.</returns>
+    Task<IEnumerable<CompanyForGet>> GetAllByIdAsync(IEnumerable<Guid> ids);
 
     /// <summary>
     /// Gets a company by its ID asynchronously.

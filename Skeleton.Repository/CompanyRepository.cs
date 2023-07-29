@@ -20,6 +20,10 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
         await FindAll(false).ToListAsync();
 
     ///<inheritdoc cref="ICompanyRepository"/>
+    public async Task<IEnumerable<Company>> GetAllByIdAsync(IEnumerable<Guid> ids) =>
+        await FindByCondition(c => ids.Contains(c.Id), false).ToListAsync();
+
+    ///<inheritdoc cref="ICompanyRepository"/>
     public async Task<Company?> GetAsync(Guid id) =>
         await FindByCondition(c => c.Id.Equals(id), false)
             .SingleOrDefaultAsync();
