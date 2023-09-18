@@ -26,13 +26,9 @@ namespace Skeleton.Extensions
         public static void ConfigureUnitOfWork(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
-
             serviceCollection.AddScoped<ICompanyRepository, CompanyRepository>();
             serviceCollection.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
-
-        private static void AddLazyScoped<T>(this IServiceCollection services) where T : class =>
-            services.AddScoped<Lazy<T>>(sp => new Lazy<T>(() => sp.GetService<T>()));
 
         /// <summary>
         /// DI for service manager.
@@ -59,7 +55,11 @@ namespace Skeleton.Extensions
             }
         }
 
-
+        /// <summary>
+        /// Configuration for database context.
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        /// <param name="configuration"></param>
         public static void ConfigureDbContext(this IServiceCollection serviceCollection,
             IConfiguration configuration) =>
             serviceCollection.AddDbContext<RepositoryContext>(opts =>
