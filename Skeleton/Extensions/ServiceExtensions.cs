@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using AutoMapper.Internal;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skeleton.Abstraction;
 using Skeleton.Abstraction.Repository;
@@ -8,7 +6,7 @@ using Skeleton.Logger;
 using Skeleton.Repository;
 using Skeleton.Service;
 using Skeleton.Service.Abstraction;
-using Skeleton.Shared.DTOs;
+using System.Reflection;
 
 namespace Skeleton.Extensions
 {
@@ -32,7 +30,7 @@ namespace Skeleton.Extensions
             serviceCollection.AddScoped<ICompanyRepository, CompanyRepository>();
             serviceCollection.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
-        
+
         private static void AddLazyScoped<T>(this IServiceCollection services) where T : class =>
             services.AddScoped<Lazy<T>>(sp => new Lazy<T>(() => sp.GetService<T>()));
 
@@ -45,9 +43,9 @@ namespace Skeleton.Extensions
             serviceCollection.AddScoped<IServiceManager, ServiceManager>();
 
             var serviceAssembly = Assembly.GetAssembly(typeof(IServiceBase));
-            
-            IEnumerable<Type> appServices = 
-                serviceAssembly.GetTypes().Where(x => x.GetInterface(nameof(IServiceBase)) != null && !x.IsAbstract 
+
+            IEnumerable<Type> appServices =
+                serviceAssembly.GetTypes().Where(x => x.GetInterface(nameof(IServiceBase)) != null && !x.IsAbstract
                     && !x.IsInterface);
 
             // Para cada tipo (será una clase)...
@@ -67,5 +65,5 @@ namespace Skeleton.Extensions
             serviceCollection.AddDbContext<RepositoryContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnectionString")));
     }
-    
+
 }

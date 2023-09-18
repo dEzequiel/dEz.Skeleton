@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
@@ -21,8 +20,8 @@ public class CompanyController : ControllerBase
         var companies = await _service.CompanyService.GetAllAsync();
         return Ok(companies);
     }
-    
-    [HttpGet("{id:guid}", Name = "GetCompany")] 
+
+    [HttpGet("{id:guid}", Name = "GetCompany")]
     [ProducesResponseType(typeof(CompanyForGet), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCompany(Guid id)
@@ -39,13 +38,13 @@ public class CompanyController : ControllerBase
         var companies = await _service.CompanyService.GetAllByIdAsync(ids);
         return Ok(companies);
     }
-    
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> AddAsync([FromBody] CompanyForAdd company)
     {
         var createdCompany = await _service.CompanyService.AddAsync(company);
-        
+
         return CreatedAtRoute("GetCompany", new
         {
             id = createdCompany.Id
