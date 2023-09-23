@@ -10,9 +10,12 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {
         builder
             .ToTable("Employee", "Skeleton")
-            .HasKey(x => x.Id)
-            .IsClustered(false);
-        
+            .HasOne(x => x.Company)
+            .WithMany(x => x.Employees)
+            .HasForeignKey(x => x.CompanyId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.HasData
         (
             new Employee

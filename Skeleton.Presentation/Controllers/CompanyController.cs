@@ -76,7 +76,7 @@ public class CompanyController : ControllerBase
     /// Create a new company.
     /// </summary>
     /// <param name="company"></param>
-    /// <returns>Company</returns>
+    /// <returns>Company.</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> AddAsync([FromBody] CompanyForAdd company)
@@ -88,5 +88,20 @@ public class CompanyController : ControllerBase
         {
             id = createdCompany.Id
         }, createdCompany);
+    }
+
+    /// <summary>
+    /// Delete company by id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>No content.</returns>
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteAsync(Guid id)
+    {
+        _logger.LogInfo($"CompanyController --> DeleteAsync({id}) --> Start");
+        await _service.CompanyService.DeleteAsync(id);
+        _logger.LogInfo($"CompanyController --> DeleteAsync({id}) --> End");
+        return NoContent();
     }
 }

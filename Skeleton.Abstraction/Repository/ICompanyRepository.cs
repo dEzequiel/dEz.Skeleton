@@ -13,7 +13,7 @@ public interface ICompanyRepository
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="Company"/>.</returns>
     Task<IEnumerable<Company>> GetAllAsync();
-    
+
     /// <summary>
     /// Asynchronously retrieves all companies by its ID.
     /// </summary>
@@ -35,5 +35,10 @@ public interface ICompanyRepository
     /// Create company.
     /// </summary>
     /// <param name="company">Company object to be created.</param>
-    void Add(Company company);
+    void AddAsync(Company company);
+
+    /// <summary>
+    /// Delete company.
+    /// </summary>
+    void DeleteAsync(Company company);
 }

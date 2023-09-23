@@ -44,7 +44,7 @@ public sealed class CompanyService : ICompanyService
     public async Task<IEnumerable<CompanyForGet>> GetAllByIdAsync(IEnumerable<Guid> ids)
     {
         _logger.LogInfo($"CompanyService --> GetAllByIdAsync --> Start");
-        
+
         if (!ids.Any())
             throw new IdParametersBadRequestException();
 
@@ -52,12 +52,12 @@ public sealed class CompanyService : ICompanyService
 
         if (companies.Count() != ids.Count())
             throw new CollectionByIdsBadRequestException();
-        
+
         var result = _mapper.Map<IEnumerable<CompanyForGet>>(companies);
 
         _logger.LogInfo($"CompanyService --> GetAllByIdAsync --> End");
 
-        return result;    
+        return result;
     }
 
     ///<inheritdoc cref="ICompanyService"/>
@@ -76,22 +76,38 @@ public sealed class CompanyService : ICompanyService
 
         return result;
     }
-    
+
     ///<inheritdoc cref="ICompanyService"/>
-    public async Task<CompanyForGet> AddAsync(CompanyForAdd company)
+    public async Task<CompanyForGet> AddAsync(CompanyForAdd companyForAdd)
     {
         _logger.LogInfo($"CompanyService --> AddAsync --> Start");
 
-        var companyEntity = _mapper.Map<Company>(company);
-        
-        _unitOfWork.CompanyRepository.Add(companyEntity);
+        var companyEntity = _mapper.Map<Company>(companyForAdd);
+
+        _unitOfWork.CompanyRepository.AddAsync(companyEntity);
         await _unitOfWork.SaveAsync();
 
         var companyToReturn = _mapper.Map<CompanyForGet>(companyEntity);
-        
+
         _logger.LogInfo($"CompanyService --> AddAsync --> End");
 
         return companyToReturn;
+    }
+
+    ///<inheritdoc cref="ICompanyService"/>
+    public async Task DeleteAsync(Guid id)
+    {
+        _logger.LogInfo($"CompanyService --> DeleteAsync({id}) --> Start");
+
+        var company = await _unitOfWork.CompanyRepository.GetAsync(id);
+
+        if (company is null)
+            throw new CompanyNotFoundException(id);
+
+        _unitOfWork.CompanyRepository.DeleteAsync(company);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInfo($"CompanyService --> DeleteAsync({id}) --> End");
     }
 
     ///<inheritdoc cref="IDisposable"/>

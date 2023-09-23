@@ -97,7 +97,27 @@ namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
 
             // Assert
             var okResult = Assert.IsType<CreatedAtRouteResult>(result);
-            var model = Assert.IsType<CompanyForGet>(okResult.Value);
+            Assert.IsType<CompanyForGet>(okResult.Value);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        internal async Task Delete_AndHttpNoContentStatusCode(
+            Mock<IServiceManager> serviceManagerMock,
+            Mock<ICompanyService> companyServiceMock,
+            ILoggerManager logger,
+            CompanyForGet companyForGet)
+        {
+            // Arrange
+            serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
+            companyServiceMock.Setup(x => x.DeleteAsync(It.IsAny<Guid>())).Returns(Task.CompletedTask);
+            var sut = new CompanyController(serviceManagerMock.Object, logger);
+
+            // Act
+            var result = await sut.DeleteAsync(companyForGet.Id);
+
+            // Assert
+            Assert.IsType<NoContentResult>(result);
         }
     }
 }

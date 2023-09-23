@@ -10,7 +10,7 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
     /// Constructor.
     /// </summary>
     /// <param name="repositoryContext"></param>
-    public CompanyRepository(RepositoryContext repositoryContext) 
+    public CompanyRepository(RepositoryContext repositoryContext)
         : base(repositoryContext)
     {
     }
@@ -29,6 +29,10 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
             .SingleOrDefaultAsync();
 
     ///<inheritdoc cref="ICompanyRepository"/>
-    public void Add(Company company) =>
+    public void AddAsync(Company company) =>
         Create(company);
+
+    ///<inheritdoc cref="ICompanyRepository"/>
+    public void DeleteAsync(Company company) =>
+        Delete(company);
 }

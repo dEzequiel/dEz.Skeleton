@@ -1,5 +1,4 @@
-﻿using Skeleton.Entities.Models;
-using Skeleton.Shared.DTOs;
+﻿using Skeleton.Shared.DTOs;
 
 namespace Skeleton.Service.Abstraction;
 
@@ -14,7 +13,7 @@ public interface ICompanyService : IServiceBase
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="CompanyForGet"/>.</returns>
     Task<IEnumerable<CompanyForGet>> GetAllAsync();
-    
+
     /// <summary>
     /// Gets all companies asynchronously by its ID.
     /// </summary>
@@ -37,5 +36,12 @@ public interface ICompanyService : IServiceBase
     /// <returns>A task representing the asynchronous operation, returning the <see cref="CompanyForGet"/>
     /// object.</returns>
     Task<CompanyForGet> AddAsync(CompanyForAdd companyForAdd);
+
+    /// <summary>
+    /// Delete company asynchronously.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>A trask representing the asynchronous operation.</returns>
+    Task DeleteAsync(Guid id);
 }
 
