@@ -1,4 +1,6 @@
-using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 using NLog;
 using Skeleton.Abstraction;
 using Skeleton.Extensions;
@@ -17,8 +19,21 @@ builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureDbContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddControllers()
-    .AddApplicationPart(typeof(Skeleton.Presentation.AssemblyReference).Assembly);
+//By adding a method like this in the Program class, we are creating a local
+//function. This function configures support for JSON Patch using
+//Newtonsoft.Json while leaving the other formatters unchanged.
+NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
+    new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson()
+    .Services.BuildServiceProvider()
+    .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
+    .OfType<NewtonsoftJsonPatchInputFormatter>().First();
+
+builder.Services.AddControllers(config =>
+{
+    config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+})
+    .AddApplicationPart(typeof(Skeleton.Presentation.AssemblyReference).Assembly)
+    .AddXmlDataContractSerializerFormatters();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
