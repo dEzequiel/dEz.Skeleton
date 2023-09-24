@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Skeleton.Abstraction;
+using Skeleton.Entities.Models;
 using Skeleton.Presentation.Controllers;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
@@ -158,6 +160,28 @@ namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
 
             // Act
             var result = await sut.UpdateAsync(Guid.NewGuid(), companyForUpdate);
+
+            // Assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        internal async Task Patch_AndHttpNoContentStatusCode(
+            Mock<IServiceManager> serviceManagerMock,
+            Mock<ICompanyService> companyServiceMock,
+            ILoggerManager logger,
+            (CompanyForUpdate companyToPatch, Company company) companyForPatching,
+            JsonPatchDocument<CompanyForUpdate> patchDocument)
+        {
+            // Arrange
+            serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
+            companyServiceMock.Setup(x => x.GetForPatchAsync(It.IsAny<Guid>(), true)).ReturnsAsync(companyForPatching);
+            companyServiceMock.Setup(x => x.SaveChangesForPatch(It.IsAny<CompanyForUpdate>(), It.IsAny<Company>())).Returns(Task.CompletedTask);
+            var sut = new CompanyController(serviceManagerMock.Object, logger);
+
+            // Act
+            var result = await sut.PartiallyUpdateAsync(Guid.NewGuid(), patchDocument);
 
             // Assert
             Assert.IsType<NoContentResult>(result);

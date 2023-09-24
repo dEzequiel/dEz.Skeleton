@@ -17,7 +17,7 @@ public class CompanyProfile : Profile
                     string.Join(' ', x.Address, x.Country)));
 
         CreateMap<CompanyForAdd, Company>();
-        CreateMap<CompanyForUpdate, Company>();
+        CreateMap<CompanyForUpdate, Company>().ReverseMap();
 
     }
 }

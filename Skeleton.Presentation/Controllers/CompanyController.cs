@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Skeleton.Abstraction;
 using Skeleton.Entities.Models;
@@ -129,6 +130,12 @@ public class CompanyController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Update company.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="company"></param>
+    /// <returns>No content.</returns>
     [HttpPut("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -138,6 +145,34 @@ public class CompanyController : ControllerBase
         _logger.LogInfo($"CompanyController --> UpdateAsync({id}) --> Start");
         await _service.CompanyService.UpdateAsync(id, company, trackChanges: true);
         _logger.LogInfo($"CompanyController --> UpdateAsync({id}) --> End");
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Partially update company.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="patchDocument"></param>
+    /// <returns>No content.</returns>
+    [HttpPatch("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> PartiallyUpdateAsync(Guid id, [FromBody] JsonPatchDocument<CompanyForUpdate> patchDocument)
+    {
+        _logger.LogInfo($"CompanyController --> PartiallyUpdateAsync({id}) --> Start");
+
+        if (patchDocument is null)
+            return BadRequest("Patch document object sent from client is null.");
+
+        var companyEntity = await _service.CompanyService.GetForPatchAsync(id, trackChanges: true);
+
+        patchDocument.ApplyTo(companyEntity.companyToPatch);
+
+        _service.CompanyService.SaveChangesForPatch(companyEntity.companyToPatch, companyEntity.company);
+
+        _logger.LogInfo($"CompanyController --> PartiallyUpdateAsync({id}) --> End");
+
         return NoContent();
     }
 }

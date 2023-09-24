@@ -1,4 +1,5 @@
-﻿using Skeleton.Shared.DTOs;
+﻿using Skeleton.Entities.Models;
+using Skeleton.Shared.DTOs;
 
 namespace Skeleton.Service.Abstraction;
 
@@ -42,7 +43,7 @@ public interface ICompanyService : IServiceBase
     /// </summary>
     /// <param name="companiesForAdd"></param>
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
-    /// <see cref="CompanyForGet"/></returns>
+    /// <see cref="CompanyForGet" with ids./></returns>
     Task<(IEnumerable<CompanyForGet> companies, string companiesId)> AddCollectionAsync(IEnumerable<CompanyForAdd> companiesForAdd);
 
     /// <summary>
@@ -60,5 +61,20 @@ public interface ICompanyService : IServiceBase
     /// <param name="trackChanges"></param>
     /// <returns>A trask representing the asynchronous operation.</returns>
     Task UpdateAsync(Guid id, CompanyForUpdate companyForUpdate, bool trackChanges);
+
+    /// <summary>
+    /// Partially update company asynchronously.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="trackChanges"></param>
+    /// <returns>A task representing the asynchronous operation, returning company for patch and company entity.</returns>
+    Task<(CompanyForUpdate companyToPatch, Company company)> GetForPatchAsync(Guid id, bool trackChanges);
+
+    /// <summary>
+    /// Save changes for patch.
+    /// </summary>
+    /// <param name="companyToPatch"></param>
+    /// <param name="company"></param>
+    Task SaveChangesForPatch(CompanyForUpdate companyToPatch, Company company);
 }
 

@@ -150,6 +150,34 @@ public sealed class CompanyService : ICompanyService
         _logger.LogInfo($"CompanyService --> UpdateAsync({id}) --> End");
     }
 
+    ///<inheritdoc cref="ICompanyService"/>
+    public async Task<(CompanyForUpdate companyToPatch, Company company)> GetForPatchAsync(Guid id, bool trackChanges)
+    {
+        _logger.LogInfo($"CompanyService --> GetForPatchAsync({id}) --> Start");
+
+        var company = await _unitOfWork.CompanyRepository.GetAsync(id, trackChanges);
+        if (company is null)
+            throw new CompanyNotFoundException(id);
+
+        var companyToPatch = _mapper.Map<CompanyForUpdate>(company);
+
+        _logger.LogInfo($"CompanyService --> GetForPatchAsync({id}) --> End");
+
+        return (companyToPatch, company);
+    }
+
+    ///<inheritdoc cref="ICompanyService"/>
+    public async Task SaveChangesForPatch(CompanyForUpdate companyToPatch, Company company)
+    {
+        _logger.LogInfo($"CompanyService --> SaveChangesForPatch --> Start");
+
+        _mapper.Map(companyToPatch, company);
+
+        _logger.LogInfo($"CompanyService --> SaveChangesForPatch --> End");
+
+        await _unitOfWork.SaveAsync();
+    }
+
     ///<inheritdoc cref="IDisposable"/>
     public void Dispose()
     {
