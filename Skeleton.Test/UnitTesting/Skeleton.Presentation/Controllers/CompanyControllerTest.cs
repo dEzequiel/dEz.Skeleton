@@ -102,6 +102,29 @@ namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
 
         [Theory]
         [AutoMoqData]
+        internal async Task AddCollectionReturnsCompanyEnumerable_AndHttpCreatedStatusCode(
+            Mock<IServiceManager> serviceManagerMock,
+            Mock<ICompanyService> companyServiceMock,
+            ILoggerManager logger,
+            IEnumerable<CompanyForAdd> companiesForAdd,
+            (IEnumerable<CompanyForGet> companies, string ids) companiesForGet)
+        {
+            // Arrange
+            serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
+            companyServiceMock.Setup(x => x.AddCollectionAsync(It.IsAny<IEnumerable<CompanyForAdd>>())).ReturnsAsync(companiesForGet);
+            var sut = new CompanyController(serviceManagerMock.Object, logger);
+
+            // Act
+            var result = await sut.AddCollectionAsync(companiesForAdd);
+
+            // Assert
+            var createdAtRouteResult = Assert.IsType<CreatedAtRouteResult>(result);
+            Assert.IsAssignableFrom<IEnumerable<CompanyForGet>>(createdAtRouteResult.Value);
+
+        }
+
+        [Theory]
+        [AutoMoqData]
         internal async Task Delete_AndHttpNoContentStatusCode(
             Mock<IServiceManager> serviceManagerMock,
             Mock<ICompanyService> companyServiceMock,

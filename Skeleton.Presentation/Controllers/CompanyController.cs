@@ -59,8 +59,8 @@ public class CompanyController : ControllerBase
     /// Get companies by ids.
     /// </summary>
     /// <param name="ids"></param>
-    /// <returns>Collection of comapnies with the passed ids.</returns>
-    [HttpGet("collection/({ids})", Name = "GetCompanyCollection")]
+    /// <returns>Collection of companies with the passed ids.</returns>
+    [HttpGet("collection/{ids}", Name = "GetCompanyCollection")]
     [ProducesResponseType(typeof(IEnumerable<CompanyForGet>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -88,8 +88,28 @@ public class CompanyController : ControllerBase
         _logger.LogInfo($"CompanyController --> AddAsync --> End");
         return CreatedAtRoute("GetCompany", new
         {
-            id = createdCompany.Id
+            ids = createdCompany.Id
         }, createdCompany);
+    }
+
+    /// <summary>
+    /// Create a collection of companies.
+    /// </summary>
+    /// <param name="companies"></param>
+    /// <returns>Collection of companies with the passed ids.</returns>
+    [HttpPost("collection")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AddCollectionAsync([FromBody] IEnumerable<CompanyForAdd> companies)
+    {
+        _logger.LogInfo($"CompanyController --> AddCollectionAsync --> Start");
+        var createdCompanies = await _service.CompanyService.AddCollectionAsync(companies);
+        _logger.LogInfo($"CompanyController --> AddCollectionAsync --> End");
+        return CreatedAtRoute("GetCompanyCollection", new
+        {
+            ids = createdCompanies.companiesId
+        }, createdCompanies.companies);
     }
 
     /// <summary>

@@ -38,6 +38,14 @@ public interface ICompanyService : IServiceBase
     Task<CompanyForGet> AddAsync(CompanyForAdd companyForAdd);
 
     /// <summary>
+    /// Add new companies asynchronously.
+    /// </summary>
+    /// <param name="companiesForAdd"></param>
+    /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
+    /// <see cref="CompanyForGet"/></returns>
+    Task<(IEnumerable<CompanyForGet> companies, string companiesId)> AddCollectionAsync(IEnumerable<CompanyForAdd> companiesForAdd);
+
+    /// <summary>
     /// Delete company asynchronously.
     /// </summary>
     /// <param name="id"></param>

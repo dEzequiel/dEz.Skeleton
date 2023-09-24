@@ -1,4 +1,4 @@
-﻿namespace Skeleton.Entities.Exceptions;
+﻿namespace Skeleton.Entities.Exceptions.Company;
 
 /// <summary>
 /// Represents an exception that is thrown when a company with a specified ID is not found.
@@ -11,6 +11,6 @@ public sealed class CompanyNotFoundException : NotFoundException
     /// with the provided company ID that was not found.
     /// </summary>
     /// <param name="companyId">The ID of the company that was not found.</param>
-    public CompanyNotFoundException(Guid companyId) 
-        : base($"Company with ID: {companyId} not found.") {}
+    public CompanyNotFoundException(Guid companyId)
+        : base($"Company with ID: {companyId} not found.") { }
 }

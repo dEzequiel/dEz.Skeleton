@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Skeleton.Abstraction;
 using Skeleton.Entities.Exceptions;
+using Skeleton.Entities.Exceptions.Company;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
@@ -94,6 +95,29 @@ public sealed class CompanyService : ICompanyService
         return companyToReturn;
     }
 
+
+    ///<inheritdoc cref="ICompanyService"/>
+    public async Task<(IEnumerable<CompanyForGet> companies, string companiesId)> AddCollectionAsync(IEnumerable<CompanyForAdd> companiesForAdd)
+    {
+        _logger.LogInfo($"CompanyService --> AddCollectionAsync --> Start");
+
+        if (companiesForAdd is null)
+            throw new CompanyCollectionBadRequestException();
+
+        var companyEntities = _mapper.Map<IEnumerable<Company>>(companiesForAdd);
+        foreach (var companyEntity in companyEntities)
+            _unitOfWork.CompanyRepository.AddAsync(companyEntity);
+
+        await _unitOfWork.SaveAsync();
+
+        var companyCollectionToReturn = _mapper.Map<IEnumerable<CompanyForGet>>(companyEntities);
+        var ids = string.Join(",", companyCollectionToReturn.Select(c => c.Id));
+
+        _logger.LogInfo($"CompanyService --> AddCollectionAsync --> End");
+
+        return (companies: companyCollectionToReturn, companiesId: ids);
+    }
+
     ///<inheritdoc cref="ICompanyService"/>
     public async Task DeleteAsync(Guid id, bool trackChanges)
     {
@@ -131,4 +155,5 @@ public sealed class CompanyService : ICompanyService
     {
         _unitOfWork.Dispose();
     }
+
 }

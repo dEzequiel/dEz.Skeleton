@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Skeleton.Abstraction;
 using Skeleton.Entities.Exceptions;
+using Skeleton.Entities.Exceptions.Company;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
