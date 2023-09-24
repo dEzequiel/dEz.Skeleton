@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Skeleton.Abstraction;
@@ -6,6 +7,7 @@ using Skeleton.Entities.Models;
 using Skeleton.Presentation.Controllers;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
+using Skeleton.Shared.RequestFeatures;
 using Skeleton.Test.Attributes;
 
 namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
@@ -39,21 +41,27 @@ namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
         internal async Task GetCompaniesReturnCompaniesCollection_AndHttpOkStatusCode(
             Mock<IServiceManager> serviceManagerMock,
             Mock<ICompanyService> companyServiceMock,
+            Mock<HttpContext> httpContextMock,
             ILoggerManager logger,
-            IEnumerable<CompanyForGet> companiesForGet)
+            CompanyParameters parameters,
+            (IEnumerable<CompanyForGet> companies, PagedListMetaData metaData) companiesForGet)
         {
             // Arrange
             serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
-            companyServiceMock.Setup(x => x.GetAllAsync(false)).ReturnsAsync(companiesForGet);
+            companyServiceMock.Setup(x => x.GetAllAsync(It.IsAny<CompanyParameters>(), false)).ReturnsAsync(companiesForGet);
+            httpContextMock.Setup(c => c.Response).Returns(new DefaultHttpContext().Response);
             var sut = new CompanyController(serviceManagerMock.Object, logger);
+            sut.ControllerContext = new ControllerContext { HttpContext = httpContextMock.Object, };
 
             // Act
-            var result = await sut.GetCompanies();
+            var result = await sut.GetCompanies(parameters);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<CompanyForGet>>(okResult.Value);
-            Assert.Equal(companiesForGet.Count(), model.Count());
+            Assert.Equal(companiesForGet.companies.Count(), model.Count());
+            var headerValue = sut.Response.Headers["X-Pagination"];
+            Assert.NotNull(headerValue);
         }
 
         [Theory]

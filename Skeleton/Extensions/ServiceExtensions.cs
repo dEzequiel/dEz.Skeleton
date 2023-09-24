@@ -64,6 +64,20 @@ namespace Skeleton.Extensions
             IConfiguration configuration) =>
             serviceCollection.AddDbContext<RepositoryContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnectionString")));
-    }
 
+
+        /// <summary>
+        /// Configuration for IIS integration.
+        /// </summary>
+        /// <param name="services"></param>
+        public static void ConfigureCors(this IServiceCollection services) =>
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithExposedHeaders("X-Pagination"));
+            });
+    }
 }

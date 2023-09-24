@@ -5,6 +5,8 @@ using Skeleton.Abstraction;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
+using Skeleton.Shared.RequestFeatures;
+using System.Text.Json;
 
 namespace Skeleton.Presentation.Controllers;
 
@@ -30,13 +32,16 @@ public class CompanyController : ControllerBase
     /// Get all companies.
     /// </summary>
     /// <returns>Collection of companies.</returns>
-    [HttpGet, ProducesResponseType(typeof(IEnumerable<Company>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetCompanies()
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Company>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetCompanies([FromQuery] CompanyParameters parameters)
     {
         _logger.LogInfo($"CompanyController --> GetCompanies --> Start");
-        var companies = await _service.CompanyService.GetAllAsync(trackChanges: false);
+        var companiesPagedResult = await _service.CompanyService.GetAllAsync(parameters, trackChanges: false);
+        Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(companiesPagedResult.metaData));
         _logger.LogInfo($"CompanyController --> GetCompanies --> End");
-        return Ok(companies);
+        return Ok(companiesPagedResult.companies);
     }
 
     /// <summary>

@@ -17,6 +17,7 @@ builder.Services.ConfigureLoggerManager();
 builder.Services.ConfigureUnitOfWork();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureDbContext(builder.Configuration);
+builder.Services.ConfigureCors();
 builder.Services.AddAutoMapper(typeof(Program));
 
 //By adding a method like this in the Program class, we are creating a local

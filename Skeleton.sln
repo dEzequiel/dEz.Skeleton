@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton", "Skeleton\Skeleton.csproj", "{6A908869-BC2F-446C-A5A9-9F7109EE3153}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Abstraction", "Skeleton.Abstraction\Skeleton.Abstraction.csproj", "{9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{62074641-5693-4BB4-B108-B12CED65AD0A} = {62074641-5693-4BB4-B108-B12CED65AD0A}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Entities", "Skeleton.Entities\Skeleton.Entities.csproj", "{0BB8115F-2940-4220-B3EE-AB5E10F1463B}"
 EndProject
@@ -17,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Presentation", "Sk
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Shared", "Skeleton.Shared\Skeleton.Shared.csproj", "{62074641-5693-4BB4-B108-B12CED65AD0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton.Test", "Skeleton.Test\Skeleton.Test.csproj", "{05FA4D03-309B-4705-A584-92CAFD34B999}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Test", "Skeleton.Test\Skeleton.Test.csproj", "{05FA4D03-309B-4705-A584-92CAFD34B999}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0B0AF7F8-6757-45EA-98B7-13EEDDC98EC3} = {0B0AF7F8-6757-45EA-98B7-13EEDDC98EC3}
 		{0BB8115F-2940-4220-B3EE-AB5E10F1463B} = {0BB8115F-2940-4220-B3EE-AB5E10F1463B}

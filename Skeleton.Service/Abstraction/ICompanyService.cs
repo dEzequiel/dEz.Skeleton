@@ -1,5 +1,6 @@
 ﻿using Skeleton.Entities.Models;
 using Skeleton.Shared.DTOs;
+using Skeleton.Shared.RequestFeatures;
 
 namespace Skeleton.Service.Abstraction;
 
@@ -13,7 +14,7 @@ public interface ICompanyService : IServiceBase
     /// </summary>
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="CompanyForGet"/>.</returns>
-    Task<IEnumerable<CompanyForGet>> GetAllAsync(bool trackChanges);
+    Task<(IEnumerable<CompanyForGet> companies, PagedListMetaData metaData)> GetAllAsync(CompanyParameters parameters, bool trackChanges);
 
     /// <summary>
     /// Gets all companies asynchronously by its ID.

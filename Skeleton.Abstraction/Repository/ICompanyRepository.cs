@@ -1,4 +1,5 @@
 ﻿using Skeleton.Entities.Models;
+using Skeleton.Shared.RequestFeatures;
 
 namespace Skeleton.Abstraction.Repository;
 
@@ -12,7 +13,7 @@ public interface ICompanyRepository
     /// </summary>
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="Company"/>.</returns>
-    Task<IEnumerable<Company>> GetAllAsync(bool trackChanges);
+    Task<PagedList<Company>> GetAllAsync(CompanyParameters parameters, bool trackChanges);
 
     /// <summary>
     /// Asynchronously retrieves all companies by its ID.

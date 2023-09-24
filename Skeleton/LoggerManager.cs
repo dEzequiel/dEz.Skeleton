@@ -5,7 +5,7 @@ namespace Skeleton.Logger
 {
     public class LoggerManager : ILoggerManager
     {
-        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+        private static NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Constructor.

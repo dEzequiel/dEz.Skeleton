@@ -5,6 +5,7 @@ using Skeleton.Entities.Exceptions.Company;
 using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
+using Skeleton.Shared.RequestFeatures;
 
 namespace Skeleton.Service;
 
@@ -28,17 +29,17 @@ public sealed class CompanyService : ICompanyService
     }
 
     ///<inheritdoc cref="ICompanyService"/>
-    public async Task<IEnumerable<CompanyForGet>> GetAllAsync(bool trackChanges)
+    public async Task<(IEnumerable<CompanyForGet> companies, PagedListMetaData metaData)> GetAllAsync(CompanyParameters parameters, bool trackChanges)
     {
         _logger.LogInfo($"CompanyService --> GetAllAsync --> Start");
 
-        var companies = await _unitOfWork.CompanyRepository.GetAllAsync(trackChanges);
+        var companies = await _unitOfWork.CompanyRepository.GetAllAsync(parameters, trackChanges);
 
         var result = _mapper.Map<IEnumerable<CompanyForGet>>(companies);
 
         _logger.LogInfo($"CompanyService --> GetAllAsync --> End");
 
-        return result;
+        return (companies: result, metaData: companies.MetaData);
     }
 
     ///<inheritdoc cref="ICompanyService"/>

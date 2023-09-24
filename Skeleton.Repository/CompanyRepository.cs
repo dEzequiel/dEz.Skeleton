@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Skeleton.Abstraction.Repository;
 using Skeleton.Entities.Models;
+using Skeleton.Shared.RequestFeatures;
 
 namespace Skeleton.Repository;
 
@@ -16,8 +17,11 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
     }
 
     ///<inheritdoc cref="ICompanyRepository"/>
-    public async Task<IEnumerable<Company>> GetAllAsync(bool trackChanges) =>
-        await FindAll(trackChanges).ToListAsync();
+    public async Task<PagedList<Company>> GetAllAsync(CompanyParameters parameters, bool trackChanges)
+    {
+        var companies = await FindAll(trackChanges).ToListAsync();
+        return PagedList<Company>.ToPagedList(companies, parameters.PageNumber, parameters.PageSize);
+    }
 
     ///<inheritdoc cref="ICompanyRepository"/>
     public async Task<IEnumerable<Company>> GetAllByIdAsync(IEnumerable<Guid> ids, bool trackChanges) =>
