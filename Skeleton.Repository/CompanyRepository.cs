@@ -16,16 +16,16 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
     }
 
     ///<inheritdoc cref="ICompanyRepository"/>
-    public async Task<IEnumerable<Company>> GetAllAsync() =>
-        await FindAll(false).ToListAsync();
+    public async Task<IEnumerable<Company>> GetAllAsync(bool trackChanges) =>
+        await FindAll(trackChanges).ToListAsync();
 
     ///<inheritdoc cref="ICompanyRepository"/>
-    public async Task<IEnumerable<Company>> GetAllByIdAsync(IEnumerable<Guid> ids) =>
-        await FindByCondition(c => ids.Contains(c.Id), false).ToListAsync();
+    public async Task<IEnumerable<Company>> GetAllByIdAsync(IEnumerable<Guid> ids, bool trackChanges) =>
+        await FindByCondition(c => ids.Contains(c.Id), trackChanges).ToListAsync();
 
     ///<inheritdoc cref="ICompanyRepository"/>
-    public async Task<Company?> GetAsync(Guid id) =>
-        await FindByCondition(c => c.Id.Equals(id), false)
+    public async Task<Company?> GetAsync(Guid id, bool trackChanges) =>
+        await FindByCondition(c => c.Id.Equals(id), trackChanges)
             .SingleOrDefaultAsync();
 
     ///<inheritdoc cref="ICompanyRepository"/>

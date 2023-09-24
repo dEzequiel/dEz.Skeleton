@@ -27,11 +27,11 @@ public sealed class CompanyService : ICompanyService
     }
 
     ///<inheritdoc cref="ICompanyService"/>
-    public async Task<IEnumerable<CompanyForGet>> GetAllAsync()
+    public async Task<IEnumerable<CompanyForGet>> GetAllAsync(bool trackChanges)
     {
         _logger.LogInfo($"CompanyService --> GetAllAsync --> Start");
 
-        var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
+        var companies = await _unitOfWork.CompanyRepository.GetAllAsync(trackChanges);
 
         var result = _mapper.Map<IEnumerable<CompanyForGet>>(companies);
 
@@ -41,14 +41,14 @@ public sealed class CompanyService : ICompanyService
     }
 
     ///<inheritdoc cref="ICompanyService"/>
-    public async Task<IEnumerable<CompanyForGet>> GetAllByIdAsync(IEnumerable<Guid> ids)
+    public async Task<IEnumerable<CompanyForGet>> GetAllByIdAsync(IEnumerable<Guid> ids, bool trackChanges)
     {
         _logger.LogInfo($"CompanyService --> GetAllByIdAsync --> Start");
 
         if (!ids.Any())
             throw new IdParametersBadRequestException();
 
-        var companies = await _unitOfWork.CompanyRepository.GetAllByIdAsync(ids);
+        var companies = await _unitOfWork.CompanyRepository.GetAllByIdAsync(ids, trackChanges);
 
         if (companies.Count() != ids.Count())
             throw new CollectionByIdsBadRequestException();
@@ -61,11 +61,11 @@ public sealed class CompanyService : ICompanyService
     }
 
     ///<inheritdoc cref="ICompanyService"/>
-    public async Task<CompanyForGet> GetByIdAsync(Guid id)
+    public async Task<CompanyForGet> GetByIdAsync(Guid id, bool trackChanges)
     {
         _logger.LogInfo($"CompanyService --> GetByIdAsync({id}) --> Start");
 
-        var company = await _unitOfWork.CompanyRepository.GetAsync(id);
+        var company = await _unitOfWork.CompanyRepository.GetAsync(id, trackChanges);
 
         if (company is null)
             throw new CompanyNotFoundException(id);
@@ -95,11 +95,11 @@ public sealed class CompanyService : ICompanyService
     }
 
     ///<inheritdoc cref="ICompanyService"/>
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, bool trackChanges)
     {
         _logger.LogInfo($"CompanyService --> DeleteAsync({id}) --> Start");
 
-        var company = await _unitOfWork.CompanyRepository.GetAsync(id);
+        var company = await _unitOfWork.CompanyRepository.GetAsync(id, trackChanges);
 
         if (company is null)
             throw new CompanyNotFoundException(id);
@@ -108,6 +108,22 @@ public sealed class CompanyService : ICompanyService
         await _unitOfWork.SaveAsync();
 
         _logger.LogInfo($"CompanyService --> DeleteAsync({id}) --> End");
+    }
+
+    ///<inheritdoc cref="ICompanyService"/>
+    public async Task UpdateAsync(Guid id, CompanyForUpdate companyForUpdate, bool trackChanges)
+    {
+        _logger.LogInfo($"CompanyService --> UpdateAsync({id}) --> Start");
+
+        var company = await _unitOfWork.CompanyRepository.GetAsync(id, trackChanges);
+
+        if (company is null)
+            throw new CompanyNotFoundException(id);
+
+        _mapper.Map(companyForUpdate, company);
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogInfo($"CompanyService --> UpdateAsync({id}) --> End");
     }
 
     ///<inheritdoc cref="IDisposable"/>

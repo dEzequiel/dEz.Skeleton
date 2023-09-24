@@ -20,7 +20,7 @@ namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
         {
             // Arrange
             serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
-            companyServiceMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(companyForGet);
+            companyServiceMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>(), false)).ReturnsAsync(companyForGet);
             var sut = new CompanyController(serviceManagerMock.Object, logger);
 
             // Act
@@ -42,7 +42,7 @@ namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
         {
             // Arrange
             serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
-            companyServiceMock.Setup(x => x.GetAllAsync()).ReturnsAsync(companiesForGet);
+            companyServiceMock.Setup(x => x.GetAllAsync(false)).ReturnsAsync(companiesForGet);
             var sut = new CompanyController(serviceManagerMock.Object, logger);
 
             // Act
@@ -64,7 +64,7 @@ namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
         {
             // Arrange
             serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
-            companyServiceMock.Setup(x => x.GetAllByIdAsync(It.IsAny<IEnumerable<Guid>>())).ReturnsAsync(companiesForGet);
+            companyServiceMock.Setup(x => x.GetAllByIdAsync(It.IsAny<IEnumerable<Guid>>(), false)).ReturnsAsync(companiesForGet);
             var sut = new CompanyController(serviceManagerMock.Object, logger);
 
             // Act
@@ -110,11 +110,31 @@ namespace Skeleton.Test.UnitTesting.Skeleton.Presentation.Controllers
         {
             // Arrange
             serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
-            companyServiceMock.Setup(x => x.DeleteAsync(It.IsAny<Guid>())).Returns(Task.CompletedTask);
+            companyServiceMock.Setup(x => x.DeleteAsync(It.IsAny<Guid>(), false)).Returns(Task.CompletedTask);
             var sut = new CompanyController(serviceManagerMock.Object, logger);
 
             // Act
             var result = await sut.DeleteAsync(companyForGet.Id);
+
+            // Assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        internal async Task Update_AndHttpNoContentStatusCode(
+            Mock<IServiceManager> serviceManagerMock,
+            Mock<ICompanyService> companyServiceMock,
+            ILoggerManager logger,
+            CompanyForUpdate companyForUpdate)
+        {
+            // Arrange
+            serviceManagerMock.Setup(s => s.CompanyService).Returns(companyServiceMock.Object);
+            companyServiceMock.Setup(x => x.UpdateAsync(It.IsAny<Guid>(), It.IsAny<CompanyForUpdate>(), false)).Returns(Task.CompletedTask);
+            var sut = new CompanyController(serviceManagerMock.Object, logger);
+
+            // Act
+            var result = await sut.UpdateAsync(Guid.NewGuid(), companyForUpdate);
 
             // Assert
             Assert.IsType<NoContentResult>(result);

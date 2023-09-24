@@ -33,7 +33,7 @@ public class CompanyController : ControllerBase
     public async Task<IActionResult> GetCompanies()
     {
         _logger.LogInfo($"CompanyController --> GetCompanies --> Start");
-        var companies = await _service.CompanyService.GetAllAsync();
+        var companies = await _service.CompanyService.GetAllAsync(trackChanges: false);
         _logger.LogInfo($"CompanyController --> GetCompanies --> End");
         return Ok(companies);
     }
@@ -50,7 +50,7 @@ public class CompanyController : ControllerBase
     public async Task<IActionResult> GetCompany(Guid id)
     {
         _logger.LogInfo($"CompanyController --> GetCompany({id}) --> Start");
-        var company = await _service.CompanyService.GetByIdAsync(id);
+        var company = await _service.CompanyService.GetByIdAsync(id, trackChanges: false);
         _logger.LogInfo($"CompanyController --> GetCompany({id}) --> End");
         return Ok(company);
     }
@@ -67,7 +67,7 @@ public class CompanyController : ControllerBase
     public async Task<IActionResult> GetCompaniesById(IEnumerable<Guid> ids)
     {
         _logger.LogInfo($"CompanyController --> GetCompanies --> Start");
-        var companies = await _service.CompanyService.GetAllByIdAsync(ids);
+        var companies = await _service.CompanyService.GetAllByIdAsync(ids, trackChanges: false);
         _logger.LogInfo($"CompanyController --> GetCompanies --> End");
         return Ok(companies);
     }
@@ -79,6 +79,8 @@ public class CompanyController : ControllerBase
     /// <returns>Company.</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> AddAsync([FromBody] CompanyForAdd company)
     {
         _logger.LogInfo($"CompanyController --> AddAsync --> Start");
@@ -97,11 +99,25 @@ public class CompanyController : ControllerBase
     /// <returns>No content.</returns>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
         _logger.LogInfo($"CompanyController --> DeleteAsync({id}) --> Start");
-        await _service.CompanyService.DeleteAsync(id);
+        await _service.CompanyService.DeleteAsync(id, trackChanges: false);
         _logger.LogInfo($"CompanyController --> DeleteAsync({id}) --> End");
+        return NoContent();
+    }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] CompanyForUpdate company)
+    {
+        _logger.LogInfo($"CompanyController --> UpdateAsync({id}) --> Start");
+        await _service.CompanyService.UpdateAsync(id, company, trackChanges: true);
+        _logger.LogInfo($"CompanyController --> UpdateAsync({id}) --> End");
         return NoContent();
     }
 }

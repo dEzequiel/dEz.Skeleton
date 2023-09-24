@@ -12,14 +12,14 @@ public interface ICompanyRepository
     /// </summary>
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="Company"/>.</returns>
-    Task<IEnumerable<Company>> GetAllAsync();
+    Task<IEnumerable<Company>> GetAllAsync(bool trackChanges);
 
     /// <summary>
     /// Asynchronously retrieves all companies by its ID.
     /// </summary>
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="Company"/>.</returns>
-    Task<IEnumerable<Company>> GetAllByIdAsync(IEnumerable<Guid> ids);
+    Task<IEnumerable<Company>> GetAllByIdAsync(IEnumerable<Guid> ids, bool trackChanges);
 
     /// <summary>
     /// Asynchronously retrieves a company by its ID.
@@ -29,7 +29,7 @@ public interface ICompanyRepository
     /// A task representing the asynchronous operation, returning the <see cref="Company"/> object
     /// with the specified ID, or null if the company is not found.
     /// </returns>
-    Task<Company?> GetAsync(Guid id);
+    Task<Company?> GetAsync(Guid id, bool trackChanges);
 
     /// <summary>
     /// Create company.

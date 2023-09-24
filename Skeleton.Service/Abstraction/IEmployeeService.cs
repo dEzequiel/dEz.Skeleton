@@ -12,7 +12,7 @@ public interface IEmployeeService : IServiceBase
     /// </summary>
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="EmployeeForGet"/>.</returns>
-    Task<IEnumerable<EmployeeForGet>> GetAllAsync(Guid companyId);
+    Task<IEnumerable<EmployeeForGet>> GetAllAsync(Guid companyId, bool trackChanges);
 
     /// <summary>
     /// Gets employee by its ID asynchronously.
@@ -21,7 +21,7 @@ public interface IEmployeeService : IServiceBase
     /// <param name="companyId">The unique identifier of the company.</param>
     /// <returns>A task representing the asynchronous operation, returning the <see cref="EmployeeForGet"/>
     /// object or null if not found.</returns>
-    Task<EmployeeForGet> GetByIdAsync(Guid id, Guid companyId);
+    Task<EmployeeForGet> GetByIdAsync(Guid id, Guid companyId, bool trackChanges);
 
     /// <summary>
     /// Add new employee asynchronously.
@@ -30,5 +30,5 @@ public interface IEmployeeService : IServiceBase
     /// <param name="companyId"></param>
     /// <returns>A task representing the asynchronous operation, returning the <see cref="EmployeeForGet"/>
     /// object.</returns>
-    Task<EmployeeForGet> AddAsync(Guid companyId, EmployeeForAdd employeeForAdd);
+    Task<EmployeeForGet> AddAsync(Guid companyId, EmployeeForAdd employeeForAdd, bool trackChanges);
 }

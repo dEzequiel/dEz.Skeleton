@@ -12,14 +12,14 @@ public interface ICompanyService : IServiceBase
     /// </summary>
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="CompanyForGet"/>.</returns>
-    Task<IEnumerable<CompanyForGet>> GetAllAsync();
+    Task<IEnumerable<CompanyForGet>> GetAllAsync(bool trackChanges);
 
     /// <summary>
     /// Gets all companies asynchronously by its ID.
     /// </summary>
     /// <returns>A task representing the asynchronous operation, returning an enumerable collection of
     /// <see cref="CompanyForGet"/>.</returns>
-    Task<IEnumerable<CompanyForGet>> GetAllByIdAsync(IEnumerable<Guid> ids);
+    Task<IEnumerable<CompanyForGet>> GetAllByIdAsync(IEnumerable<Guid> ids, bool trackChanges);
 
     /// <summary>
     /// Gets a company by its ID asynchronously.
@@ -27,7 +27,7 @@ public interface ICompanyService : IServiceBase
     /// <param name="id">The unique identifier of the company.</param>
     /// <returns>A task representing the asynchronous operation, returning the <see cref="CompanyForGet"/>
     /// object or null if not found.</returns>
-    Task<CompanyForGet> GetByIdAsync(Guid id);
+    Task<CompanyForGet> GetByIdAsync(Guid id, bool trackChanges);
 
     /// <summary>
     /// Add new company asynchronously.
@@ -42,6 +42,15 @@ public interface ICompanyService : IServiceBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns>A trask representing the asynchronous operation.</returns>
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(Guid id, bool trackChanges);
+
+    /// <summary>
+    /// Update company asynchronously.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="companyForUpdate"></param>
+    /// <param name="trackChanges"></param>
+    /// <returns>A trask representing the asynchronous operation.</returns>
+    Task UpdateAsync(Guid id, CompanyForUpdate companyForUpdate, bool trackChanges);
 }
 
