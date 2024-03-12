@@ -6,7 +6,6 @@ using Skeleton.Entities.Models;
 using Skeleton.Service.Abstraction;
 using Skeleton.Shared.DTOs;
 using Skeleton.Shared.RequestFeatures;
-using System.Text.Json;
 
 namespace Skeleton.Presentation.Controllers;
 
@@ -39,7 +38,7 @@ public class CompanyController : ControllerBase
     {
         _logger.LogInfo($"CompanyController --> GetCompanies --> Start");
         var companiesPagedResult = await _service.CompanyService.GetAllAsync(parameters, trackChanges: false);
-        Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(companiesPagedResult.metaData));
+        //Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(companiesPagedResult.metaData));
         _logger.LogInfo($"CompanyController --> GetCompanies --> End");
         return Ok(companiesPagedResult.companies);
     }
