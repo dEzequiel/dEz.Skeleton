@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace Skeleton.CQRSCore.Domain
 {
+    /// <summary>
+    /// Aggregate can be viewed as the domain entity on the write or command side. Unlike domain entities, it contains
+    /// behaviour and its structure is due to the fundamental difference on how the data is stored on write/event stores 
+    /// databases.
+    /// 
+    /// Aggregate should allow to be able to use the events to recreate or replay the latest state of the Aggregate,
+    /// without querying read database of related service for the latest state.
+    /// </summary>
     public abstract class AggregateRoot
     {
         /// <summary>
