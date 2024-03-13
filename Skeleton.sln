@@ -17,6 +17,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Service", "Skeleton.Service\Skeleton.Service.csproj", "{765591BC-CD04-45EF-A3D2-20A43B6A980C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Presentation", "Skeleton.Presentation\Skeleton.Presentation.csproj", "{0B0AF7F8-6757-45EA-98B7-13EEDDC98EC3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DFE6F287-1592-4BC8-A639-216F7E5AE5D6} = {DFE6F287-1592-4BC8-A639-216F7E5AE5D6}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Shared", "Skeleton.Shared\Skeleton.Shared.csproj", "{62074641-5693-4BB4-B108-B12CED65AD0A}"
 EndProject
@@ -30,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Test", "Skeleton.T
 		{765591BC-CD04-45EF-A3D2-20A43B6A980C} = {765591BC-CD04-45EF-A3D2-20A43B6A980C}
 		{9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9} = {9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton.CQRSCore", "Skeleton.CQRSCore\Skeleton.CQRSCore.csproj", "{DFE6F287-1592-4BC8-A639-216F7E5AE5D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +74,10 @@ Global
 		{05FA4D03-309B-4705-A584-92CAFD34B999}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05FA4D03-309B-4705-A584-92CAFD34B999}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05FA4D03-309B-4705-A584-92CAFD34B999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFE6F287-1592-4BC8-A639-216F7E5AE5D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFE6F287-1592-4BC8-A639-216F7E5AE5D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFE6F287-1592-4BC8-A639-216F7E5AE5D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFE6F287-1592-4BC8-A639-216F7E5AE5D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
