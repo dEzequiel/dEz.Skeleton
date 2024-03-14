@@ -28,6 +28,7 @@ namespace Skeleton.Extensions
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
             serviceCollection.AddScoped<ICompanyRepository, CompanyRepository>();
             serviceCollection.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            serviceCollection.AddScoped<IEventStoreRepository, EventStoreRepository>();
         }
 
         /// <summary>
