@@ -2,7 +2,12 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skeleton.Abstraction;
 using Skeleton.Abstraction.Repository;
+using Skeleton.CQRSCore.Infrastructure;
+using Skeleton.Entities.Aggregates;
 using Skeleton.Logger;
+using Skeleton.Presentation.Commands.Company;
+using Skeleton.Presentation.Dispatchers;
+using Skeleton.Presentation.Handlers;
 using Skeleton.Repository;
 using Skeleton.Service;
 using Skeleton.Service.Abstraction;
@@ -65,6 +70,34 @@ namespace Skeleton.Extensions
             IConfiguration configuration) =>
             serviceCollection.AddDbContext<RepositoryContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnectionString")));
+
+
+        /// <summary>
+        /// DI for event sourcing.
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        public static void ConfigureEventSourcingHandlers(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<IEventSourcingHandler<CompanyAggregate>, CompanyEventSourcingHandler>();
+        }
+
+        /// <summary>
+        /// DI for command handlers.
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        public static void ConfigureCommandHandlers(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<ICompanyCommandHandler, CompanyCommandHandler>();
+
+            var companyCommandHandler = serviceCollection.BuildServiceProvider().GetRequiredService<ICompanyCommandHandler>();
+            var commandDispatcher = new CommandDispatcher();
+            
+            commandDispatcher.RegisterHandler<AddCompanyCommand>(companyCommandHandler.HandleAsync);
+            commandDispatcher.RegisterHandler<DeleteCompanyCommand>(companyCommandHandler.HandleAsync);
+            commandDispatcher.RegisterHandler<UpdateCompanyCommand>(companyCommandHandler.HandleAsync);
+
+            serviceCollection.AddSingleton<ICommandDispatcher>(commandDispatcher);
+        }
 
 
         /// <summary>

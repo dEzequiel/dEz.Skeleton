@@ -12,7 +12,7 @@ namespace Skeleton.Presentation.Handlers
     /// <summary>
     /// Command handler implementation for company related commands.
     /// </summary>
-    internal class CompanyCommandHandler : ICompanyCommandHandler
+    public class CompanyCommandHandler : ICompanyCommandHandler
     {
         private readonly IEventSourcingHandler<CompanyAggregate> _eventSourcingHandler;
 

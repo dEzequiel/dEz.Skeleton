@@ -17,6 +17,8 @@ builder.Services.ConfigureLoggerManager();
 builder.Services.ConfigureUnitOfWork();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureDbContext(builder.Configuration);
+builder.Services.ConfigureEventSourcingHandlers();
+builder.Services.ConfigureCommandHandlers();
 builder.Services.ConfigureCors();
 builder.Services.AddAutoMapper(typeof(Program));
 
