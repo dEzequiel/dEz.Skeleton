@@ -11,6 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Abstraction", "Ske
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Entities", "Skeleton.Entities\Skeleton.Entities.csproj", "{0BB8115F-2940-4220-B3EE-AB5E10F1463B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DFE6F287-1592-4BC8-A639-216F7E5AE5D6} = {DFE6F287-1592-4BC8-A639-216F7E5AE5D6}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Repository", "Skeleton.Repository\Skeleton.Repository.csproj", "{434955F7-ADCA-41EE-91C5-1B41F7FF994E}"
 EndProject
@@ -22,6 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Presentation", "Sk
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Shared", "Skeleton.Shared\Skeleton.Shared.csproj", "{62074641-5693-4BB4-B108-B12CED65AD0A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DFE6F287-1592-4BC8-A639-216F7E5AE5D6} = {DFE6F287-1592-4BC8-A639-216F7E5AE5D6}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Test", "Skeleton.Test\Skeleton.Test.csproj", "{05FA4D03-309B-4705-A584-92CAFD34B999}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -34,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.Test", "Skeleton.T
 		{9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9} = {9F3CFBCE-6036-4A97-AAA9-4D26B988CFF9}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton.CQRSCore", "Skeleton.CQRSCore\Skeleton.CQRSCore.csproj", "{DFE6F287-1592-4BC8-A639-216F7E5AE5D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skeleton.CQRSCore", "Skeleton.CQRSCore\Skeleton.CQRSCore.csproj", "{DFE6F287-1592-4BC8-A639-216F7E5AE5D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

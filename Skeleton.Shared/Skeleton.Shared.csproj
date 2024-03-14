@@ -10,5 +10,9 @@
       <PackageReference Include="NLog.Extensions.Logging" Version="5.3.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Skeleton.CQRSCore\Skeleton.CQRSCore.csproj" />
+    </ItemGroup>
+
 
 </Project>

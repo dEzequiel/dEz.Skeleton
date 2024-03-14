@@ -61,6 +61,8 @@ namespace Skeleton.CQRSCore.Domain
         /// <summary>
         /// Apply changes done by the events to the inner state of the aggregate and optionally add those events
         /// to the uncommited list of events.
+        /// 
+        /// Using "reflection" calls the apply method on the concrete aggregate when a event is raised.
         /// </summary>
         /// <param name="event"></param>
         /// <param name="isNew"></param>
@@ -84,6 +86,9 @@ namespace Skeleton.CQRSCore.Domain
 
         /// <summary>
         /// Raise an specific event.
+        /// 
+        /// Once events are raised, ApplyChange method uses "reflection" to try and figure out which
+        /// apply method on the concrete aggregate it should invoke.
         /// </summary>
         /// <param name="event"></param>
         protected void RaiseEvent(BaseEvent @event)
