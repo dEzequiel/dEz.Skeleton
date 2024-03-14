@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Skeleton.Presentation.Dispatchers
 {
-    public class CommandDispatcher : ICommandDispatcher
+    public class CommandDispatcher : ICommandDispatcher 
     {
         /// <summary>
         /// Registered handlers.
