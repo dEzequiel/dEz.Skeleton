@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Skeleton.CQRSCore.Events;
 using Skeleton.Entities.Models;
 using Skeleton.Repository.Configuration;
 
@@ -18,4 +19,5 @@ public class RepositoryContext : DbContext
 
     public DbSet<Company>? Companies { get; set; }
     public DbSet<Employee>? Employees { get; set; }
+    public DbSet<EventModel> Events { get; set; }
 }

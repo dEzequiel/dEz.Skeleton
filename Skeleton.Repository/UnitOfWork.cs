@@ -9,6 +9,8 @@ public class UnitOfWork : IUnitOfWork
     private readonly RepositoryContext _repositoryContext;
     private readonly ICompanyRepository _companyRepository;
     private readonly IEmployeeRepository _employeeRepository;
+    
+    private readonly IEventStoreRepository _eventStoreRepository;
 
     /// <summary>
     /// Constructor.
@@ -16,15 +18,17 @@ public class UnitOfWork : IUnitOfWork
     /// <param name="repositoryContext"></param>
     /// <param name="companyRepository"></param>
     /// <param name="employeeRepository"></param>
-    public UnitOfWork(RepositoryContext repositoryContext, ICompanyRepository companyRepository, IEmployeeRepository employeeRepository)
+    public UnitOfWork(RepositoryContext repositoryContext, ICompanyRepository companyRepository, IEmployeeRepository employeeRepository, IEventStoreRepository eventStoreRepository)
     {
         _repositoryContext = repositoryContext;
         _companyRepository = companyRepository;
         _employeeRepository = employeeRepository;
+        _eventStoreRepository = eventStoreRepository;
     }
 
     public ICompanyRepository CompanyRepository => _companyRepository;
     public IEmployeeRepository EmployeeRepository => _employeeRepository;
+    public IEventStoreRepository EventStoreRepository => _eventStoreRepository;
 
     ///<inheritdoc cref="IUnitOfWork"/>
     public async Task SaveAsync()
